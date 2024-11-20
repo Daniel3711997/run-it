@@ -1,6 +1,6 @@
 {
     "name": "run-it",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "displayName": "Run It",
     "description": "Runs VSCode commands on file changes",
     "keywords": [
