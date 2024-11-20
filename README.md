@@ -7,7 +7,7 @@ Runs VSCode commands on file changes
     {
         "delay": 4000,
         "commands": ["eslint.restart"],
-        "files": ["**/styles/**/*.d.ts"]
+        "files": ["**/clients/**/*.ts", "**/styles/**/*.d.ts"]
     }
 ]
 ```
