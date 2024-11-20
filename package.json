@@ -10,6 +10,7 @@
         "*"
     ],
     "main": "./dist/extension.js",
+    "publisher": "UnpackSoftware",
     "repository": {
         "type": "git",
         "url": "https://github.com/Daniel3711997/run-it"
@@ -65,12 +66,10 @@
         "pretest": "npm run compile-tests && npm run compile && npm run lint",
         "check-outdated": "check-outdated --columns name,type,current,latest,changes",
         "check-spell": "cspell --cache --cache-location node_modules/.cache/cspell/cache --dot --no-progress --no-must-find-files \"**/*.{js,ts,json}\"",
-        "package": "check-engine && npm run check-spell && npm run check-types && npm run lint && node esbuild.js --production",
+        "package": "npm run check-spell && npm run check-types && npm run lint && node esbuild.js --production",
         "lint": "eslint --cache --cache-location node_modules/.cache/eslint/cache --no-error-on-unmatched-pattern src"
     },
     "engines": {
-        "npm": ">=10.9",
-        "node": ">=20.18",
         "vscode": "^1.95.0"
     },
     "config": {
@@ -99,7 +98,6 @@
         "@typescript-eslint/parser": "^8.15.0",
         "@vscode/test-cli": "^0.0.10",
         "@vscode/test-electron": "^2.4.1",
-        "check-engine": "^1.14.0",
         "check-outdated": "^2.12.0",
         "cross-env": "^7.0.3",
         "cspell": "^8.16.0",
