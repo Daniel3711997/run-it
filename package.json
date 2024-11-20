@@ -1,0 +1,121 @@
+{
+    "name": "run-it",
+    "version": "1.0.0",
+    "displayName": "Run It",
+    "description": "Runs VSCode commands on file changes",
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "*"
+    ],
+    "main": "./dist/extension.js",
+    "contributes": {
+        "configuration": {
+            "title": "Run It",
+            "properties": {
+                "run-it.commands": {
+                    "type": "array",
+                    "description": "Commands to run on file changes",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "commands": {
+                                "type": "array",
+                                "description": "The VSCode commands to run",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "files": {
+                                "type": "array",
+                                "description": "The files to watch for changes as glob patterns relative to the workspace root. e.g. 'src/**/*.ts' to watch all TypeScript files in the 'src' directory. https://code.visualstudio.com/docs/editor/glob-patterns",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "delay": {
+                                "type": "number",
+                                "description": "The delay in milliseconds to wait after a file change before running the commands"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "scripts": {
+        "knip": "knip",
+        "prepare": "husky",
+        "test": "vscode-test",
+        "check-types": "tsc --noEmit",
+        "postinstall": "patch-package",
+        "commit": "git add . && git-cz",
+        "watch": "npm-run-all -p watch:*",
+        "vscode:prepublish": "npm run package",
+        "compile-tests": "tsc -p . --outDir out",
+        "watch-tests": "tsc -p . -w --outDir out",
+        "watch:esbuild": "node esbuild.js --watch",
+        "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+        "compile": "npm run check-types && npm run lint && node esbuild.js",
+        "pretest": "npm run compile-tests && npm run compile && npm run lint",
+        "check-outdated": "check-outdated --columns name,type,current,latest,changes",
+        "check-spell": "cspell --cache --cache-location node_modules/.cache/cspell/cache --dot --no-progress --no-must-find-files \"**/*.{js,ts,json}\"",
+        "package": "check-engine && npm run check-spell && npm run check-types && npm run lint && node esbuild.js --production",
+        "lint": "eslint --cache --cache-location node_modules/.cache/eslint/cache --no-error-on-unmatched-pattern src"
+    },
+    "engines": {
+        "npm": ">=10.9",
+        "node": ">=20.18",
+        "vscode": "^1.95.0"
+    },
+    "config": {
+        "commitizen": {
+            "path": "@commitlint/cz-commitlint"
+        }
+    },
+    "lint-staged": {
+        "**/*.{js,ts}": [
+            "eslint --cache --cache-location node_modules/.cache/eslint/cache --no-error-on-unmatched-pattern"
+        ],
+        "**/*.{js,ts,json}": [
+            "prettier --write",
+            "cspell --cache --cache-location node_modules/.cache/cspell/cache --dot --no-progress --no-must-find-files"
+        ]
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^19.6.0",
+        "@commitlint/config-conventional": "^19.6.0",
+        "@commitlint/cz-commitlint": "^19.5.0",
+        "@eslint-community/eslint-plugin-eslint-comments": "^4.4.1",
+        "@types/mocha": "^10.0.9",
+        "@types/node": "20.x",
+        "@types/vscode": "^1.95.0",
+        "@typescript-eslint/eslint-plugin": "^8.15.0",
+        "@typescript-eslint/parser": "^8.15.0",
+        "@vscode/test-cli": "^0.0.10",
+        "@vscode/test-electron": "^2.4.1",
+        "check-engine": "^1.14.0",
+        "check-outdated": "^2.12.0",
+        "cross-env": "^7.0.3",
+        "cspell": "^8.16.0",
+        "esbuild": "^0.24.0",
+        "eslint": "^8",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-config-standard": "^17.1.0",
+        "eslint-import-resolver-typescript": "^3.6.3",
+        "eslint-plugin-import": "^2.31.0",
+        "eslint-plugin-n": "^16.6.2",
+        "eslint-plugin-promise": "^6.6.0",
+        "eslint-plugin-sort-exports": "^0.9.1",
+        "husky": "^9.1.7",
+        "inquirer": "^9.3.7",
+        "knip": "^5.37.1",
+        "lint-staged": "^15.2.10",
+        "npm-run-all": "^4.1.5",
+        "patch-package": "^8.0.0",
+        "prettier": "^3.3.3",
+        "typescript": "^5.6.3"
+    },
+    "packageManager": "npm@10.9.0+sha512.65a9c38a8172948f617a53619762cd77e12b9950fe1f9239debcb8d62c652f2081824b986fee7c0af6c0a7df615becebe4bf56e17ec27214a87aa29d9e038b4b"
+}

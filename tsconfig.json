@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "rootDir": "src",
+        "lib": ["es2022"],
+        "sourceMap": true,
+        "module": "node16",
+        "target": "es2022",
+
+        "paths": {
+            "@/app/*": ["./src/*"]
+        },
+
+        "skipLibCheck": true,
+        "noUnusedLocals": false,
+        "noImplicitReturns": true,
+        "noUnusedParameters": false,
+        "noUncheckedIndexedAccess": true,
+        "noFallthroughCasesInSwitch": true
+    }
+}
