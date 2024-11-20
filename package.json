@@ -3,6 +3,13 @@
     "version": "1.0.1",
     "displayName": "Run It",
     "description": "Runs VSCode commands on file changes",
+    "keywords": [
+        "run",
+        "commands",
+        "file",
+        "changes"
+    ],
+    "icon": "assets/icon.png",
     "categories": [
         "Other"
     ],

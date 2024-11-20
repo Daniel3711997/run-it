@@ -65,34 +65,39 @@ const onDidChangeConfiguration = () => {
 
     if (commands) {
         commands.forEach(({ commands: commandsList, files, delay }) => {
+            const executor = () => {
+                commandsList.forEach((individualCommand, index) => {
+                    commandsWaitingToRun.slice().forEach(({ timer, command }) => {
+                        if (command === individualCommand) {
+                            clearTimeout(timer);
+                        }
+
+                        commandsWaitingToRun.splice(index, 1);
+                    });
+
+                    commandsWaitingToRun.push({
+                        command: individualCommand,
+                        timer: setTimeout(() => {
+                            const resolvePromise = showStatusBarMessage();
+
+                            vscode.commands.executeCommand(individualCommand);
+
+                            console.log(`Running command: ${individualCommand}`);
+
+                            if (resolvePromise)
+                                setTimeout(() => {
+                                    resolvePromise();
+                                }, 250);
+                        }, delay ?? 2000),
+                    });
+                });
+            };
+
             files.forEach(filePattern => {
                 const watcher = vscode.workspace.createFileSystemWatcher(filePattern, false, false, true);
 
-                watcher.onDidChange(() => {
-                    commandsList.forEach((individualCommand, index) => {
-                        commandsWaitingToRun.slice().forEach(({ timer, command }) => {
-                            if (command === individualCommand) {
-                                clearTimeout(timer);
-                            }
-
-                            commandsWaitingToRun.splice(index, 1);
-                        });
-
-                        commandsWaitingToRun.push({
-                            command: individualCommand,
-                            timer: setTimeout(() => {
-                                const resolvePromise = showStatusBarMessage();
-
-                                vscode.commands.executeCommand(individualCommand);
-
-                                if (resolvePromise)
-                                    setTimeout(() => {
-                                        resolvePromise();
-                                    }, 250);
-                            }, delay ?? 2000),
-                        });
-                    });
-                });
+                watcher.onDidCreate(executor);
+                watcher.onDidChange(executor);
 
                 watchers.push(watcher);
             });
