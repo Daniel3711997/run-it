@@ -77,7 +77,7 @@ const onDidChangeConfiguration = () => {
 
                     if (command) {
                         if (debug) {
-                            runItOutput.append(`Clearing command: ${individualCommand}`);
+                            runItOutput.appendLine(`Clearing command: ${individualCommand}`);
                         }
 
                         clearTimeout(command.timer);
@@ -85,7 +85,7 @@ const onDidChangeConfiguration = () => {
                     }
 
                     if (debug) {
-                        runItOutput.append(
+                        runItOutput.appendLine(
                             `Setting command: ${individualCommand} with delay: ${(delay ?? defaultDelay).toString()}`,
                         );
                     }
@@ -96,13 +96,13 @@ const onDidChangeConfiguration = () => {
                             const resolvePromise = showStatusBarMessage();
 
                             if (debug) {
-                                runItOutput.append(`Running command: ${individualCommand}`);
+                                runItOutput.appendLine(`Running command: ${individualCommand}`);
                             }
 
                             vscode.commands.executeCommand(individualCommand);
 
                             if (debug) {
-                                runItOutput.append(`Deleting command: ${individualCommand}`);
+                                runItOutput.appendLine(`Deleting command: ${individualCommand}`);
                             }
 
                             commandsWaitingToRun.delete(individualCommand);
