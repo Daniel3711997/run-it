@@ -19,14 +19,19 @@ export function activate(context: vscode.ExtensionContext) {
 interface RunItConfig {
     delay?: number;
     files: string[];
+    debug?: boolean;
     commands: string[];
 }
 
+const defaultDelay = 2000;
 let isStatusBarMessageVisible = false;
-const commandsWaitingToRun: {
-    command: string;
-    timer: ReturnType<typeof setTimeout>;
-}[] = [];
+const commandsWaitingToRun = new Map<
+    string,
+    {
+        command: string;
+        timer: ReturnType<typeof setTimeout>;
+    }
+>();
 const watchers: ReturnType<typeof vscode.workspace.createFileSystemWatcher>[] = [];
 
 const showStatusBarMessage = () => {
@@ -64,43 +69,61 @@ const onDidChangeConfiguration = () => {
     const commands = config.get<RunItConfig[]>('commands');
 
     if (commands) {
-        commands.forEach(({ commands: commandsList, files, delay }) => {
+        for (const { files, delay, debug, commands: commandsList } of commands) {
             const executor = () => {
-                commandsList.forEach((individualCommand, index) => {
-                    commandsWaitingToRun.slice().forEach(({ timer, command }) => {
-                        if (command === individualCommand) {
-                            clearTimeout(timer);
+                for (const individualCommand of commandsList) {
+                    const command = commandsWaitingToRun.get(individualCommand);
+
+                    if (command) {
+                        if (debug) {
+                            console.log(`Clearing command: ${individualCommand}`);
                         }
 
-                        commandsWaitingToRun.splice(index, 1);
-                    });
+                        clearTimeout(command.timer);
+                        commandsWaitingToRun.delete(individualCommand);
+                    }
 
-                    commandsWaitingToRun.push({
+                    if (debug) {
+                        console.log(
+                            `Setting command: ${individualCommand} with delay: ${(delay ?? defaultDelay).toString()}`,
+                        );
+                    }
+
+                    commandsWaitingToRun.set(individualCommand, {
                         command: individualCommand,
                         timer: setTimeout(() => {
                             const resolvePromise = showStatusBarMessage();
 
+                            if (debug) {
+                                console.log(`Running command: ${individualCommand}`);
+                            }
+
                             vscode.commands.executeCommand(individualCommand);
 
-                            console.log(`Running command: ${individualCommand}`);
+                            if (debug) {
+                                console.log(`Deleting command: ${individualCommand}`);
+                            }
 
-                            if (resolvePromise)
+                            commandsWaitingToRun.delete(individualCommand);
+
+                            if (resolvePromise) {
                                 setTimeout(() => {
                                     resolvePromise();
                                 }, 250);
+                            }
                         }, delay ?? 2000),
                     });
-                });
+                }
             };
 
-            files.forEach(filePattern => {
+            for (const filePattern of files) {
                 const watcher = vscode.workspace.createFileSystemWatcher(filePattern, false, false, true);
 
                 watcher.onDidCreate(executor);
                 watcher.onDidChange(executor);
 
                 watchers.push(watcher);
-            });
-        });
+            }
+        }
     }
 };

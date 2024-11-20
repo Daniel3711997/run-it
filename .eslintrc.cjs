@@ -42,7 +42,7 @@ module.exports = {
         ],
 
         'no-shadow': 'off',
-        '@typescript-eslint/no-shadow': 'warn',
+        '@typescript-eslint/no-shadow': 'error',
 
         '@eslint-community/eslint-comments/disable-enable-pair': 'off',
         '@eslint-community/eslint-comments/no-unused-disable': 'error',

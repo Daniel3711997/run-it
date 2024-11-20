@@ -49,6 +49,10 @@
                             "delay": {
                                 "type": "number",
                                 "description": "The delay in milliseconds to wait after a file change before running the commands"
+                            },
+                            "debug": {
+                                "type": "boolean",
+                                "description": "Whether to log debug information to the output channel, useful for troubleshooting"
                             }
                         }
                     }
