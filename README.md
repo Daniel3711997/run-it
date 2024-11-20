@@ -6,6 +6,7 @@ Runs VSCode commands on file changes
 "run-it.commands": [
     {
         "delay": 4000,
+        "debug": false,
         "commands": ["eslint.restart"],
         "files": ["**/clients/**/*.ts", "**/styles/**/*.d.ts"]
     }

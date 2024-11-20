@@ -31,6 +31,10 @@
                     "description": "Commands to run on file changes",
                     "items": {
                         "type": "object",
+                        "required": [
+                            "files",
+                            "commands"
+                        ],
                         "properties": {
                             "commands": {
                                 "type": "array",

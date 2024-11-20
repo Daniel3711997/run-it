@@ -32,6 +32,7 @@ const commandsWaitingToRun = new Map<
         timer: ReturnType<typeof setTimeout>;
     }
 >();
+const runItOutput = vscode.window.createOutputChannel('Run It');
 const watchers: ReturnType<typeof vscode.workspace.createFileSystemWatcher>[] = [];
 
 const showStatusBarMessage = () => {
@@ -76,7 +77,7 @@ const onDidChangeConfiguration = () => {
 
                     if (command) {
                         if (debug) {
-                            console.log(`Clearing command: ${individualCommand}`);
+                            runItOutput.append(`Clearing command: ${individualCommand}`);
                         }
 
                         clearTimeout(command.timer);
@@ -84,7 +85,7 @@ const onDidChangeConfiguration = () => {
                     }
 
                     if (debug) {
-                        console.log(
+                        runItOutput.append(
                             `Setting command: ${individualCommand} with delay: ${(delay ?? defaultDelay).toString()}`,
                         );
                     }
@@ -95,13 +96,13 @@ const onDidChangeConfiguration = () => {
                             const resolvePromise = showStatusBarMessage();
 
                             if (debug) {
-                                console.log(`Running command: ${individualCommand}`);
+                                runItOutput.append(`Running command: ${individualCommand}`);
                             }
 
                             vscode.commands.executeCommand(individualCommand);
 
                             if (debug) {
-                                console.log(`Deleting command: ${individualCommand}`);
+                                runItOutput.append(`Deleting command: ${individualCommand}`);
                             }
 
                             commandsWaitingToRun.delete(individualCommand);
