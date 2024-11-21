@@ -26,6 +26,10 @@
         "configuration": {
             "title": "Run It",
             "properties": {
+                "run-it.globalDebug": {
+                    "type": "boolean",
+                    "description": "(Global, will log everything) Whether to log debug information to the output channel, useful for troubleshooting"
+                },
                 "run-it.commands": {
                     "type": "array",
                     "description": "Commands to run on file changes",
@@ -80,9 +84,9 @@
         "compile": "npm run check-types && npm run lint && node esbuild.js",
         "pretest": "npm run compile-tests && npm run compile && npm run lint",
         "check-outdated": "check-outdated --columns name,type,current,latest,changes",
-        "check-spell": "cspell --cache --cache-location node_modules/.cache/cspell/cache --dot --no-progress --no-must-find-files \"**/*.{js,ts,json}\"",
+        "check-spell": "cspell --dot --no-progress --no-must-find-files \"**/*.{js,ts,json}\"",
         "package": "npm run check-spell && npm run check-types && npm run lint && node esbuild.js --production",
-        "lint": "eslint --cache --cache-location node_modules/.cache/eslint/cache --no-error-on-unmatched-pattern src"
+        "lint": "eslint --no-error-on-unmatched-pattern src"
     },
     "engines": {
         "vscode": "^1.95.0"
@@ -94,11 +98,11 @@
     },
     "lint-staged": {
         "**/*.{js,ts}": [
-            "eslint --cache --cache-location node_modules/.cache/eslint/cache --no-error-on-unmatched-pattern"
+            "eslint --no-error-on-unmatched-pattern"
         ],
         "**/*.{js,ts,json}": [
             "prettier --write",
-            "cspell --cache --cache-location node_modules/.cache/cspell/cache --dot --no-progress --no-must-find-files"
+            "cspell --dot --no-progress --no-must-find-files"
         ]
     },
     "devDependencies": {

@@ -44,6 +44,18 @@ module.exports = {
         'no-shadow': 'off',
         '@typescript-eslint/no-shadow': 'error',
 
+        camelcase: 'off',
+        '@typescript-eslint/naming-convention': [
+            'error',
+            { format: null, selector: 'objectLiteralProperty' },
+            {
+                selector: 'default',
+                leadingUnderscore: 'allow',
+                trailingUnderscore: 'allow',
+                format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
+            },
+        ],
+
         '@eslint-community/eslint-comments/disable-enable-pair': 'off',
         '@eslint-community/eslint-comments/no-unused-disable': 'error',
 
@@ -97,20 +109,6 @@ module.exports = {
         {
             files: ['**/*.ts', '**/*.tsx'],
             rules: {
-                // camelcase: 'off',
-                // '@typescript-eslint/naming-convention': [
-                //     'error',
-                //     { selector: 'default', format: ['camelCase'] },
-                //     { selector: 'typeLike', format: ['PascalCase'] },
-                //     { selector: 'variable', format: ['camelCase', 'UPPER_CASE'] },
-                //     { selector: 'parameter', format: ['camelCase'], leadingUnderscore: 'allow' },
-                //     {
-                //         selector: 'memberLike',
-                //         modifiers: ['private'],
-                //         format: ['camelCase'],
-                //         leadingUnderscore: 'require',
-                //     },
-                // ],
                 'no-use-before-define': 'off',
                 '@typescript-eslint/no-use-before-define': [
                     'error',

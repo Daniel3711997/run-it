@@ -3,6 +3,7 @@
 Runs VSCode commands on file changes
 
 ```
+"run-it.globalDebug": false,
 "run-it.commands": [
     {
         "delay": 4000,
