@@ -28,7 +28,6 @@ let isStatusBarMessageVisible = false;
 const commandsWaitingToRun = new Map<
     string,
     {
-        command: string;
         timer: ReturnType<typeof setTimeout>;
     }
 >();
@@ -61,6 +60,18 @@ const onDidChangeConfiguration = () => {
     const config = vscode.workspace.getConfiguration('run-it');
     const commands = config.get<RunItConfig[]>('commands') ?? [];
     const globalDebug = config.get<boolean>('globalDebug') ?? false;
+
+    if (globalDebug) {
+        runItOutput.appendLine(`Watchers: ${watchers.length.toString()}`);
+        runItOutput.appendLine(`Number of commands waiting to run: ${commandsWaitingToRun.size.toString()}`);
+
+        // prettier-ignore
+        runItOutput.appendLine(
+            `Commands waiting to run: ${JSON.stringify(
+                Array.from(commandsWaitingToRun.keys()),
+            )}`,
+        );
+    }
 
     while (watchers.length) {
         if (globalDebug) {
@@ -99,7 +110,6 @@ const onDidChangeConfiguration = () => {
                 }
 
                 commandsWaitingToRun.set(individualCommand, {
-                    command: individualCommand,
                     timer: setTimeout(() => {
                         const resolvePromise = showStatusBarMessage();
 
