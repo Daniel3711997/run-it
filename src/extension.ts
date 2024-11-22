@@ -1,21 +1,5 @@
 import * as vscode from 'vscode';
 
-export function deactivate() {
-    // Silence Is Golden
-}
-
-export function activate(context: vscode.ExtensionContext) {
-    onDidChangeConfiguration();
-
-    context.subscriptions.push(
-        vscode.workspace.onDidChangeConfiguration(event => {
-            if (event.affectsConfiguration('run-it')) {
-                onDidChangeConfiguration();
-            }
-        }),
-    );
-}
-
 interface RunItConfig {
     delay?: number;
     files: string[];
@@ -31,8 +15,51 @@ const commandsWaitingToRun = new Map<
         timer: ReturnType<typeof setTimeout>;
     }
 >();
+const config = vscode.workspace.getConfiguration('run-it');
 const runItOutput = vscode.window.createOutputChannel('Run It');
+const commands = config.get<RunItConfig[]>('commands') ?? [];
+const globalDebug = config.get<boolean>('globalDebug') ?? false;
 const watchers: ReturnType<typeof vscode.workspace.createFileSystemWatcher>[] = [];
+
+const disposeAllWatchers = () => {
+    while (watchers.length) {
+        if (globalDebug) {
+            runItOutput.appendLine(`Disposing ${watchers.length.toString()} attached watchers`);
+        }
+
+        const watcher = watchers.pop();
+
+        if (watcher) {
+            watcher.dispose();
+        }
+    }
+};
+
+export function deactivate() {
+    disposeAllWatchers();
+
+    commandsWaitingToRun.forEach(({ timer }, individualCommand: string) => {
+        runItOutput.appendLine(`Clearing command: ${individualCommand}`);
+        clearTimeout(timer);
+
+        if (globalDebug) {
+            runItOutput.appendLine(`Deleting command: ${individualCommand}`);
+        }
+        commandsWaitingToRun.delete(individualCommand);
+    });
+}
+
+export function activate(context: vscode.ExtensionContext) {
+    onDidChangeConfiguration();
+
+    context.subscriptions.push(
+        vscode.workspace.onDidChangeConfiguration(event => {
+            if (event.affectsConfiguration('run-it')) {
+                onDidChangeConfiguration();
+            }
+        }),
+    );
+}
 
 const showStatusBarMessage = () => {
     if (isStatusBarMessageVisible) {
@@ -57,10 +84,6 @@ const showStatusBarMessage = () => {
 };
 
 const onDidChangeConfiguration = () => {
-    const config = vscode.workspace.getConfiguration('run-it');
-    const commands = config.get<RunItConfig[]>('commands') ?? [];
-    const globalDebug = config.get<boolean>('globalDebug') ?? false;
-
     if (globalDebug) {
         runItOutput.appendLine(`Number of attached watchers: ${watchers.length.toString()}`);
         runItOutput.appendLine(`Number of commands waiting to run: ${commandsWaitingToRun.size.toString()}`);
@@ -73,17 +96,7 @@ const onDidChangeConfiguration = () => {
         );
     }
 
-    while (watchers.length) {
-        if (globalDebug) {
-            runItOutput.appendLine(`Disposing ${watchers.length.toString()} attached watchers`);
-        }
-
-        const watcher = watchers.pop();
-
-        if (watcher) {
-            watcher.dispose();
-        }
-    }
+    disposeAllWatchers();
 
     if (globalDebug) {
         runItOutput.appendLine(`Loaded commands: ${JSON.stringify(commands)}`);
