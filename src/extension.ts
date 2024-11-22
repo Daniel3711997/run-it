@@ -41,12 +41,12 @@ export function deactivate() {
     commandsWaitingToRun.forEach(({ timer }, individualCommand: string) => {
         runItOutput.appendLine(`Clearing command: ${individualCommand}`);
         clearTimeout(timer);
-
-        if (globalDebug) {
-            runItOutput.appendLine(`Deleting command: ${individualCommand}`);
-        }
-        commandsWaitingToRun.delete(individualCommand);
     });
+
+    if (globalDebug) {
+        runItOutput.appendLine(`Deleting ${commandsWaitingToRun.size.toString()} commands`);
+    }
+    commandsWaitingToRun.clear();
 }
 
 export function activate(context: vscode.ExtensionContext) {
