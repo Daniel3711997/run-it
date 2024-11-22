@@ -50,8 +50,8 @@ module.exports = {
             { format: null, selector: 'objectLiteralProperty' },
             {
                 selector: 'default',
-                leadingUnderscore: 'allow',
-                trailingUnderscore: 'allow',
+                leadingUnderscore: 'allowSingleOrDouble',
+                trailingUnderscore: 'allowSingleOrDouble',
                 format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
             },
         ],
