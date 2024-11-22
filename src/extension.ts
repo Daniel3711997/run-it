@@ -62,7 +62,7 @@ const onDidChangeConfiguration = () => {
     const globalDebug = config.get<boolean>('globalDebug') ?? false;
 
     if (globalDebug) {
-        runItOutput.appendLine(`Watchers: ${watchers.length.toString()}`);
+        runItOutput.appendLine(`Number of attached watchers: ${watchers.length.toString()}`);
         runItOutput.appendLine(`Number of commands waiting to run: ${commandsWaitingToRun.size.toString()}`);
 
         // prettier-ignore
@@ -75,7 +75,7 @@ const onDidChangeConfiguration = () => {
 
     while (watchers.length) {
         if (globalDebug) {
-            runItOutput.appendLine(`Clearing ${watchers.length.toString()} watchers`);
+            runItOutput.appendLine(`Disposing ${watchers.length.toString()} attached watchers`);
         }
 
         const watcher = watchers.pop();
@@ -86,7 +86,7 @@ const onDidChangeConfiguration = () => {
     }
 
     if (globalDebug) {
-        runItOutput.appendLine(`Commands: ${JSON.stringify(commands)}`);
+        runItOutput.appendLine(`Loaded commands: ${JSON.stringify(commands)}`);
     }
 
     for (const { files, delay, debug = false, commands: commandsList } of commands) {
