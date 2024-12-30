@@ -13,7 +13,7 @@
 
         "skipLibCheck": true,
         "noUnusedLocals": false,
-        "noImplicitReturns": true,
+        "noImplicitReturns": false,
         "noUnusedParameters": false,
         "noUncheckedIndexedAccess": true,
         "noFallthroughCasesInSwitch": true

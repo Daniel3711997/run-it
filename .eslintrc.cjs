@@ -12,15 +12,16 @@ module.exports = {
     reportUnusedDisableDirectives: false,
     parser: '@typescript-eslint/parser',
     extends: [
+        'standard',
+        'prettier',
         'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
         'plugin:@typescript-eslint/stylistic',
         'plugin:import/recommended',
-        'standard',
-        'prettier',
         'plugin:import/typescript',
         'plugin:@eslint-community/eslint-comments/recommended',
     ],
+    plugins: ['unicorn'],
     settings: {
         'import/resolver': {
             typescript: {
@@ -33,6 +34,52 @@ module.exports = {
         },
     },
     rules: {
+        'no-lonely-if': 'error',
+        'no-warning-comments': 'off',
+        'no-implicit-coercion': [
+            'error',
+            {
+                allow: ['!!'],
+            },
+        ],
+        'array-callback-return': [
+            'error',
+            {
+                allowVoid: true,
+                checkForEach: true,
+                allowImplicit: true,
+            },
+        ],
+
+        'unicorn/prefer-prototype-methods': 'error',
+        'unicorn/prefer-default-parameters': 'error',
+        'unicorn/prefer-optional-catch-binding': 'error',
+        'unicorn/prefer-native-coercion-functions': 'error',
+        'unicorn/prefer-logical-operator-over-ternary': 'error',
+
+        'unicorn/escape-case': 'error',
+        'unicorn/no-lonely-if': 'error',
+        'unicorn/error-message': 'error',
+        'unicorn/no-useless-spread': 'error',
+        'unicorn/no-zero-fractions': 'error',
+        'unicorn/number-literal-case': 'error',
+        'unicorn/no-useless-undefined': 'error',
+        'unicorn/no-unnecessary-await': 'error',
+        'unicorn/expiring-todo-comments': [
+            'error',
+            {
+                allowWarningComments: false,
+            },
+        ],
+        'unicorn/no-length-as-slice-end': 'error',
+        'unicorn/consistent-function-scoping': 'error',
+        'unicorn/no-await-in-promise-methods': 'error',
+        'unicorn/no-useless-fallback-in-spread': 'error',
+        'unicorn/consistent-empty-array-spread': 'error',
+        'unicorn/no-invalid-remove-event-listener': 'error',
+        'unicorn/no-useless-promise-resolve-reject': 'error',
+        'unicorn/no-single-promise-in-promise-methods': 'error',
+
         yoda: [
             'error',
             'always',
@@ -109,6 +156,8 @@ module.exports = {
         {
             files: ['**/*.ts', '**/*.tsx'],
             rules: {
+                'no-return-await': 'off',
+                '@typescript-eslint/return-await': ['error', 'always'],
                 'no-use-before-define': 'off',
                 '@typescript-eslint/no-use-before-define': [
                     'error',

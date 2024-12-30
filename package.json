@@ -1,6 +1,6 @@
 {
     "name": "run-it",
-    "version": "1.0.10",
+    "version": "1.0.11",
     "displayName": "Run It",
     "description": "Runs VSCode commands on file changes",
     "keywords": [
@@ -80,13 +80,13 @@
         "compile-tests": "tsc -p . --outDir out",
         "watch-tests": "tsc -p . -w --outDir out",
         "watch:esbuild": "node esbuild.js --watch",
+        "lint": "eslint --no-error-on-unmatched-pattern src",
         "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
         "compile": "npm run check-types && npm run lint && node esbuild.js",
         "pretest": "npm run compile-tests && npm run compile && npm run lint",
         "check-outdated": "check-outdated --columns name,type,current,latest,changes",
         "check-spell": "cspell --dot --no-progress --no-must-find-files \"**/*.{js,ts,json}\"",
-        "package": "npm run check-spell && npm run check-types && npm run lint && node esbuild.js --production",
-        "lint": "eslint --no-error-on-unmatched-pattern src"
+        "package": "npm run check-spell && npm run check-types && npm run lint && node esbuild.js --production"
     },
     "engines": {
         "vscode": "^1.95.0"
@@ -106,37 +106,38 @@
         ]
     },
     "devDependencies": {
-        "@commitlint/cli": "^19.6.0",
+        "@commitlint/cli": "^19.6.1",
         "@commitlint/config-conventional": "^19.6.0",
-        "@commitlint/cz-commitlint": "^19.5.0",
+        "@commitlint/cz-commitlint": "^19.6.1",
         "@eslint-community/eslint-plugin-eslint-comments": "^4.4.1",
         "@types/mocha": "^10.0.10",
         "@types/node": "20.x",
         "@types/vscode": "^1.95.0",
-        "@typescript-eslint/eslint-plugin": "^8.15.0",
-        "@typescript-eslint/parser": "^8.15.0",
+        "@typescript-eslint/eslint-plugin": "^8.18.2",
+        "@typescript-eslint/parser": "^8.18.2",
         "@vscode/test-cli": "^0.0.10",
         "@vscode/test-electron": "^2.4.1",
         "check-outdated": "^2.12.0",
         "cross-env": "^7.0.3",
-        "cspell": "^8.16.0",
-        "esbuild": "^0.24.0",
+        "cspell": "^8.17.1",
+        "esbuild": "^0.24.2",
         "eslint": "^8",
         "eslint-config-prettier": "^9.1.0",
         "eslint-config-standard": "^17.1.0",
-        "eslint-import-resolver-typescript": "^3.6.3",
+        "eslint-import-resolver-typescript": "^3.7.0",
         "eslint-plugin-import": "^2.31.0",
         "eslint-plugin-n": "^16.6.2",
         "eslint-plugin-promise": "^6.6.0",
         "eslint-plugin-sort-exports": "^0.9.1",
+        "eslint-plugin-unicorn": "^56.0.1",
         "husky": "^9.1.7",
         "inquirer": "^9.3.7",
-        "knip": "^5.37.2",
-        "lint-staged": "^15.2.10",
+        "knip": "^5.41.1",
+        "lint-staged": "^15.3.0",
         "npm-run-all": "^4.1.5",
         "patch-package": "^8.0.0",
-        "prettier": "^3.3.3",
-        "typescript": "^5.6.3"
+        "prettier": "^3.4.2",
+        "typescript": "^5.7.2"
     },
-    "packageManager": "npm@10.9.0+sha512.65a9c38a8172948f617a53619762cd77e12b9950fe1f9239debcb8d62c652f2081824b986fee7c0af6c0a7df615becebe4bf56e17ec27214a87aa29d9e038b4b"
+    "packageManager": "npm@11.0.0+sha512.11dff29565d2297c74e7c594a9762581bde969f0aa5cbe6f5b3644bf008a16c065ece61094d9ffbb81125be38df8e1ba43eb8244b3d30c61eb797e9a2440e3ec"
 }
