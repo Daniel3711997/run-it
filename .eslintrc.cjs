@@ -99,7 +99,7 @@ module.exports = {
                 selector: 'default',
                 leadingUnderscore: 'allowSingleOrDouble',
                 trailingUnderscore: 'allowSingleOrDouble',
-                format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
+                format: ['snake_case', 'camelCase', 'PascalCase', 'UPPER_CASE'],
             },
         ],
 
