@@ -27,8 +27,12 @@ module.exports = {
             plugins: ['unicorn'],
             settings: {
                 'import/resolver': {
-                    typescript: true,
-                    node: true,
+                    // https://www.npmjs.com/package/eslint-import-resolver-typescript
+                    typescript: {
+                        alwaysTryTypes: true,
+                        project: './tsconfig.json',
+                    },
+                    node: true, // https://www.npmjs.com/package/eslint-import-resolver-node
                 },
                 'import/parsers': {
                     '@typescript-eslint/parser': ['.ts', '.tsx'],
