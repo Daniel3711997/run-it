@@ -1,6 +1,6 @@
 {
     "name": "run-it",
-    "version": "1.0.12",
+    "version": "1.0.13",
     "displayName": "Run It",
     "description": "Runs VSCode commands on file changes",
     "keywords": [
@@ -106,23 +106,23 @@
         ]
     },
     "devDependencies": {
-        "@commitlint/cli": "^19.6.1",
-        "@commitlint/config-conventional": "^19.6.0",
-        "@commitlint/cz-commitlint": "^19.6.1",
+        "@commitlint/cli": "^19.8.0",
+        "@commitlint/config-conventional": "^19.8.0",
+        "@commitlint/cz-commitlint": "^19.8.0",
         "@eslint-community/eslint-plugin-eslint-comments": "^4.4.1",
         "@types/mocha": "^10.0.10",
         "@types/node": "20.x",
-        "@types/vscode": "^1.95.0",
-        "@typescript-eslint/eslint-plugin": "^8.21.0",
-        "@typescript-eslint/parser": "^8.21.0",
+        "@types/vscode": "^1.98.0",
+        "@typescript-eslint/eslint-plugin": "^8.26.0",
+        "@typescript-eslint/parser": "^8.26.0",
         "@vscode/test-cli": "^0.0.10",
         "@vscode/test-electron": "^2.4.1",
         "check-outdated": "^2.12.0",
         "cross-env": "^7.0.3",
-        "cspell": "^8.17.2",
-        "esbuild": "^0.24.2",
+        "cspell": "^8.17.5",
+        "esbuild": "^0.25.0",
         "eslint": "^8",
-        "eslint-config-prettier": "^10.0.1",
+        "eslint-config-prettier": "^10.1.1",
         "eslint-config-standard": "^17.1.0",
         "eslint-import-resolver-typescript": "^3.7.0",
         "eslint-plugin-import": "^2.31.0",
@@ -132,12 +132,12 @@
         "eslint-plugin-unicorn": "^56.0.1",
         "husky": "^9.1.7",
         "inquirer": "^9.3.7",
-        "knip": "^5.41.2",
-        "lint-staged": "^15.4.1",
+        "knip": "^5.45.0",
+        "lint-staged": "^15.4.3",
         "npm-run-all": "^4.1.5",
         "patch-package": "^8.0.0",
-        "prettier": "^3.4.2",
-        "typescript": "^5.7.3"
+        "prettier": "^3.5.3",
+        "typescript": "^5.8.2"
     },
-    "packageManager": "npm@11.0.0+sha512.11dff29565d2297c74e7c594a9762581bde969f0aa5cbe6f5b3644bf008a16c065ece61094d9ffbb81125be38df8e1ba43eb8244b3d30c61eb797e9a2440e3ec"
+    "packageManager": "npm@11.1.0+sha512.11dff29565d2297c74e7c594a9762581bde969f0aa5cbe6f5b3644bf008a16c065ece61094d9ffbb81125be38df8e1ba43eb8244b3d30c61eb797e9a2440e3ec"
 }
