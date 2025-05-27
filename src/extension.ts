@@ -2,8 +2,8 @@ import * as vscode from 'vscode';
 
 interface RunItConfig {
     delay?: number;
-    files: string[];
     debug?: boolean;
+    files: string[];
     commands: string[];
 }
 
@@ -49,18 +49,6 @@ export function deactivate() {
     commandsWaitingToRun.clear();
 }
 
-export function activate(context: vscode.ExtensionContext) {
-    onDidChangeConfiguration();
-
-    context.subscriptions.push(
-        vscode.workspace.onDidChangeConfiguration(event => {
-            if (event.affectsConfiguration('run-it')) {
-                onDidChangeConfiguration();
-            }
-        }),
-    );
-}
-
 const showStatusBarMessage = () => {
     if (isStatusBarMessageVisible) {
         return;
@@ -102,7 +90,7 @@ const onDidChangeConfiguration = () => {
         runItOutput.appendLine(`Loaded commands: ${JSON.stringify(commands)}`);
     }
 
-    for (const { files, delay, debug = false, commands: commandsList } of commands) {
+    for (const { delay, files, debug = false, commands: commandsList } of commands) {
         const executor = () => {
             for (const individualCommand of commandsList) {
                 const command = commandsWaitingToRun.get(individualCommand);
@@ -162,3 +150,15 @@ const onDidChangeConfiguration = () => {
         }
     }
 };
+
+export function activate(context: vscode.ExtensionContext) {
+    onDidChangeConfiguration();
+
+    context.subscriptions.push(
+        vscode.workspace.onDidChangeConfiguration(event => {
+            if (event.affectsConfiguration('run-it')) {
+                onDidChangeConfiguration();
+            }
+        }),
+    );
+}

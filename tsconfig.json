@@ -8,7 +8,7 @@
         "target": "es2022",
 
         "paths": {
-            "@/app/*": ["./src/*"]
+            "@/*": ["./src/*"]
         },
 
         "skipLibCheck": true,

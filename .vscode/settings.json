@@ -1,13 +1,69 @@
-// Place your settings in this file to overwrite default and user settings.
 {
+    // Editor
     "files.exclude": {
-        "out": false, // set this to true to hide the "out" folder with the compiled JS files
-        "dist": false // set this to true to hide the "dist" folder with the compiled JS files
+        "out": false,
+        "dist": false
     },
     "search.exclude": {
-        "out": true, // set this to false to include "out" folder in search results
-        "dist": true // set this to false to include "dist" folder in search results
+        "out": true,
+        "dist": true
     },
-    // Turn off tsc task auto detection since we have the necessary tasks as npm scripts
-    "typescript.tsc.autoDetect": "off"
+    "typescript.tsc.autoDetect": "off",
+
+    // Path Intellisense
+    "path-intellisense.mappings": {
+        "@/": "${workspaceFolder}/src"
+    },
+
+    // Code Spell Checker
+    "cSpell.useLocallyInstalledCSpellDictionaries": true,
+    "cSpell.files": ["**/.*.json", "**/*.{js,jsx,ts,tsx,json,css,scss}"],
+
+    // General
+    "editor.formatOnSave": true,
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 120,
+    "files.trimFinalNewlines": true,
+    "files.insertFinalNewline": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "always"
+    },
+    "javascript.suggest.paths": false,
+    "typescript.suggest.paths": false,
+    "javascript.validate.enable": true,
+    "typescript.validate.enable": true,
+    "files.trimTrailingWhitespace": true,
+    "editor.occurrencesHighlight": "off",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "javascript.preferences.importModuleSpecifierEnding": "auto",
+    "javascript.preferences.importModuleSpecifier": "non-relative",
+    "typescript.preferences.importModuleSpecifierEnding": "auto",
+    "typescript.preferences.importModuleSpecifier": "non-relative",
+    "terminal.integrated.env.osx": {
+        "PATH": "${env:PATH}:${workspaceFolder}/node_modules/.bin"
+    },
+
+    // Trailing Spaces
+    "trailing-spaces.highlightCurrentLine": false,
+    "trailing-spaces.backgroundColor": "rgba(255, 0, 0, 0.4)",
+    "trailing-spaces.borderColor": "rgba(255, 100, 100, 0.15)",
+
+    // ESLint
+    "eslint.codeActionsOnSave.rules": ["!/*", "perfectionist/*"],
+
+    // Error Lens
+    "errorLens.margin": "25px",
+    "errorLens.fontSize": "12px",
+    "errorLens.padding": "2px 5px",
+    "errorLens.borderRadius": "4px",
+    "errorLens.messageMaxChars": 150,
+    "errorLens.gutterIconsEnabled": true,
+    "errorLens.statusBarIconsEnabled": false,
+    "errorLens.fontFamily": "JetBrains Mono",
+    "errorLens.statusBarIconsPriority": 90000,
+    "errorLens.messageBackgroundMode": "message",
+    "errorLens.statusBarMessagePriority": -100000,
+    "errorLens.enabledDiagnosticLevels": ["error", "warning" /* "info", "hint" */]
 }
