@@ -414,7 +414,7 @@ export default defineConfig([
                 'error',
                 {
                     ...defaultSortOptions,
-                    internalPattern: ['^@/.*', '^@styles/.*', '^@clients/.*', '^@fonts/.*', '^@images/.*'],
+                    internalPattern: ['^@/.*'],
                     groups: [
                         'side-effect-style',
                         'side-effect',
