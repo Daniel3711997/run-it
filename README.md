@@ -2,13 +2,13 @@
 
 Runs VSCode commands on file changes
 
-```
+```JSON
 "run-it.globalDebug": false,
 "run-it.commands": [
     {
         "delay": 4000,
         "debug": false,
-        "commands": ["eslint.restart"],
+        "commands": ["eslint.revalidate"],
         "files": ["**/clients/**/*.ts", "**/styles/**/*.d.ts"]
     }
 ]

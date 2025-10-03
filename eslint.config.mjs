@@ -12,19 +12,19 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import js from '@eslint/js';
-import globals from 'globals';
 import json from '@eslint/json';
 import markdown from '@eslint/markdown';
-import nodePlugin from 'eslint-plugin-n';
-import promise from 'eslint-plugin-promise';
-import unicorn from 'eslint-plugin-unicorn';
-import importPlugin from 'eslint-plugin-import';
 import stylistic from '@stylistic/eslint-plugin';
 import prettier from 'eslint-config-prettier/flat';
+import importPlugin from 'eslint-plugin-import';
+import nodePlugin from 'eslint-plugin-n';
 import perfectionist from 'eslint-plugin-perfectionist';
+import promise from 'eslint-plugin-promise';
+import unicorn from 'eslint-plugin-unicorn';
+import globals from 'globals';
 
 import { defineConfig, globalIgnores } from 'eslint/config';
-import { parser as TSESLintParser, configs as TSESLintConfigs } from 'typescript-eslint';
+import { configs as TSESLintConfigs, parser as TSESLintParser } from 'typescript-eslint';
 
 // import css from '@eslint/css'; <- Disabled for now, StyleLint is used instead for the CSS/SCSS files.
 
@@ -32,10 +32,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const defaultSortOptions = {
-    type: 'line-length',
+    type: 'alphabetical',
     order: 'asc',
     fallbackSort: {
-        type: 'alphabetical',
+        type: 'line-length',
         order: 'asc',
     },
 };
@@ -58,7 +58,7 @@ export default defineConfig([
             },
         },
         linterOptions: {
-            reportUnusedDisableDirectives: false,
+            reportUnusedDisableDirectives: 'error',
         },
     },
     {
@@ -73,6 +73,24 @@ export default defineConfig([
          * Included only the rules that are not already included in the ESLint recommended config.
          */
         rules: {
+            // 'require-yield': 'error', // Custom
+            // 'require-await': 'error', // Custom
+
+            'no-use-before-define': 'off',
+            '@typescript-eslint/no-use-before-define': [
+                'error',
+                {
+                    classes: false,
+                    functions: false,
+                    variables: false,
+                    allowNamedExports: false,
+
+                    enums: false,
+                    typedefs: false,
+                    ignoreTypeReferences: true,
+                },
+            ],
+
             'no-var': 'warn',
             'object-shorthand': 'error',
             'accessor-pairs': 'error',
@@ -167,6 +185,10 @@ export default defineConfig([
             'promise/param-names': 'error',
         },
     },
+    // {
+    //     files: ['**/*.spec.{js,jsx,ts,tsx}', '**/*.test.{js,jsx,ts,tsx}'],
+    //     extends: [jest.configs['flat/style'], jest.configs['flat/recommended']],
+    // },
     {
         files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
         plugins: {
@@ -182,6 +204,9 @@ export default defineConfig([
                     project: './tsconfig.json',
                 }, // https://www.npmjs.com/package/eslint-import-resolver-typescript
                 node: true, // https://www.npmjs.com/package/eslint-import-resolver-node
+            },
+            'import/parsers': {
+                '@typescript-eslint/parser': ['.ts', '.tsx'],
             },
         },
         extends: [
@@ -286,6 +311,10 @@ export default defineConfig([
                     allowWarningComments: true,
                 },
             ],
+
+            'unicorn/no-array-callback-reference': 'off', // ....
+            'unicorn/prefer-single-call': 'off', // As of v59.0.0
+
             'unicorn/no-unnecessary-slice-end': 'error', // As of v59.0.0
             'unicorn/consistent-function-scoping': 'error',
             'unicorn/no-await-in-promise-methods': 'error',
@@ -294,6 +323,18 @@ export default defineConfig([
             'unicorn/no-invalid-remove-event-listener': 'error',
             'unicorn/no-useless-promise-resolve-reject': 'error',
             'unicorn/no-single-promise-in-promise-methods': 'error',
+
+            // v60.0.0
+            'unicorn/prefer-class-fields': 'error',
+            'unicorn/no-array-reverse': 'off',
+            'unicorn/require-module-specifiers': 'off',
+            'unicorn/no-useless-error-capture-stack-trace': 'off',
+
+            // v61.0.0
+            'unicorn/no-array-sort': 'off',
+            'unicorn/prefer-bigint-literals': 'off',
+            'unicorn/prefer-classlist-toggle': 'off',
+            'unicorn/require-module-attributes': 'off',
 
             'no-shadow': 'off',
             '@typescript-eslint/no-shadow': 'error',
@@ -334,26 +375,30 @@ export default defineConfig([
                 },
             ],
 
-            // /**
-            //  * @see https://perfectionist.dev/rules/sort-array-includes
-            //  */
-            // 'perfectionist/sort-array-includes': ['error', defaultSortOptions],
-            // /**
-            //  * @see https://perfectionist.dev/rules/sort-classes
-            //  */
-            // 'perfectionist/sort-classes': ['error', defaultSortOptions],
-            // /**
-            //  * @see https://perfectionist.dev/rules/sort-maps
-            //  */
+            /**
+             * @see https://perfectionist.dev/rules/sort-maps
+             */
             // 'perfectionist/sort-maps': ['error', defaultSortOptions],
-            // /**
-            //  * @see https://perfectionist.dev/rules/sort-modules
-            //  */
-            // 'perfectionist/sort-modules': ['error', defaultSortOptions],
-            // /**
-            //  * @see https://perfectionist.dev/rules/sort-sets
-            //  */
+
+            /**
+             * @see https://perfectionist.dev/rules/sort-sets
+             */
             // 'perfectionist/sort-sets': ['error', defaultSortOptions],
+
+            /**
+             * @see https://perfectionist.dev/rules/sort-modules
+             */
+            // 'perfectionist/sort-modules': ['error', defaultSortOptions],
+
+            /**
+             * @see https://perfectionist.dev/rules/sort-classes
+             */
+            // 'perfectionist/sort-classes': ['error', defaultSortOptions],
+
+            /**
+             * @see https://perfectionist.dev/rules/sort-array-includes
+             */
+            // 'perfectionist/sort-array-includes': ['error', defaultSortOptions],
 
             /**
              * @see https://perfectionist.dev/rules/sort-enums
@@ -362,19 +407,28 @@ export default defineConfig([
             /**
              * @see https://perfectionist.dev/rules/sort-objects
              */
-            'perfectionist/sort-objects': ['error', defaultSortOptions],
+            'perfectionist/sort-objects': [
+                'error',
+                {
+                    type: 'unsorted',
+                    useConfigurationIf: {
+                        callingFunctionNamePattern: '^infiniteQueryOptions$',
+                    },
+                },
+                defaultSortOptions,
+            ],
             /**
              * @see https://perfectionist.dev/rules/sort-interfaces
              */
             'perfectionist/sort-interfaces': ['error', defaultSortOptions],
             /**
-             * @see https://perfectionist.dev/rules/sort-decorators
-             */
-            'perfectionist/sort-decorators': ['error', defaultSortOptions],
-            /**
              * @see https://perfectionist.dev/rules/sort-jsx-props
              */
             'perfectionist/sort-jsx-props': ['error', defaultSortOptions],
+            /**
+             * @see https://perfectionist.dev/rules/sort-decorators
+             */
+            'perfectionist/sort-decorators': ['error', defaultSortOptions],
             /**
              * @see https://perfectionist.dev/rules/sort-switch-case
              */
@@ -539,22 +593,12 @@ export default defineConfig([
             },
         },
         rules: {
-            'no-return-await': 'off',
-            '@typescript-eslint/return-await': ['error', 'always'],
-            'no-use-before-define': 'off',
-            '@typescript-eslint/no-use-before-define': [
-                'error',
-                {
-                    classes: true,
-                    functions: true,
-                    variables: true,
-                    allowNamedExports: false,
+            'require-await': 'off',
+            '@typescript-eslint/require-await': 'error',
 
-                    enums: true,
-                    typedefs: true,
-                    ignoreTypeReferences: true,
-                },
-            ],
+            'no-return-await': 'off', // Deprecated
+            '@typescript-eslint/return-await': ['error', 'always'],
+
             'no-void': [
                 'error',
                 {
@@ -568,17 +612,34 @@ export default defineConfig([
                     allowDestructuring: true,
                 },
             ],
-            '@typescript-eslint/no-non-null-assertion': 'off',
-            '@typescript-eslint/prefer-nullish-coalescing': [
+            'no-var': 'off', // https://github.com/eslint/eslint/issues/15896
+            'no-restricted-syntax': [
                 'error',
                 {
-                    ignorePrimitives: true,
+                    message: 'Unexpected var, use let or const instead.',
+                    selector: "VariableDeclaration[kind='var'][declare!=true]",
                 },
             ],
+            '@typescript-eslint/no-non-null-assertion': 'off',
+            // '@typescript-eslint/prefer-nullish-coalescing': [
+            //     'error',
+            //     {
+            //         ignorePrimitives: true,
+            //     },
+            // ],
+            '@typescript-eslint/prefer-optional-chain': 'off',
+            '@typescript-eslint/prefer-nullish-coalescing': 'off', // Not compatible with the React compiler
             '@typescript-eslint/strict-boolean-expressions': 'off',
+            '@typescript-eslint/no-unnecessary-type-parameters': 'off',
             '@typescript-eslint/non-nullable-type-assertion-style': 'off',
         },
         extends: [TSESLintConfigs.strictTypeChecked, TSESLintConfigs.stylisticTypeChecked],
+    },
+    {
+        files: ['**/*.d.ts'],
+        rules: {
+            'no-restricted-syntax': 'off', // https://github.com/eslint/eslint/issues/15896
+        },
     },
     // {
     //     files: ['**/*.css'],

@@ -51,7 +51,10 @@
     "trailing-spaces.borderColor": "rgba(255, 100, 100, 0.15)",
 
     // ESLint
-    "eslint.codeActionsOnSave.rules": ["!/*", "perfectionist/*"],
+    "eslint.codeActionsOnSave.options": {
+        "overrideConfigFile": "fix-eslint.config.mjs"
+    },
+    // "eslint.codeActionsOnSave.rules": ["!/*", "perfectionist/*"],
 
     // Error Lens
     "errorLens.margin": "25px",

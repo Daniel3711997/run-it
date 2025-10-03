@@ -1,10 +1,10 @@
 import * as vscode from 'vscode';
 
 interface RunItConfig {
-    delay?: number;
-    debug?: boolean;
-    files: string[];
     commands: string[];
+    debug?: boolean;
+    delay?: number;
+    files: string[];
 }
 
 const defaultDelay = 2000;
@@ -15,18 +15,20 @@ const commandsWaitingToRun = new Map<
         timer: ReturnType<typeof setTimeout>;
     }
 >();
-const config = vscode.workspace.getConfiguration('run-it');
+
+let config = vscode.workspace.getConfiguration('run-it');
+let commands = config.get<RunItConfig[]>('commands') ?? [];
+let globalDebug = config.get<boolean>('globalDebug') ?? false;
+
 const runItOutput = vscode.window.createOutputChannel('Run It');
-const commands = config.get<RunItConfig[]>('commands') ?? [];
-const globalDebug = config.get<boolean>('globalDebug') ?? false;
 const watchers: ReturnType<typeof vscode.workspace.createFileSystemWatcher>[] = [];
 
 const disposeAllWatchers = () => {
-    while (watchers.length) {
-        if (globalDebug) {
-            runItOutput.appendLine(`Disposing ${watchers.length.toString()} attached watchers`);
-        }
+    if (globalDebug) {
+        runItOutput.appendLine(`Disposing ${watchers.length.toString()} attached watchers`);
+    }
 
+    while (watchers.length) {
         const watcher = watchers.pop();
 
         if (watcher) {
@@ -56,7 +58,7 @@ const showStatusBarMessage = () => {
 
     isStatusBarMessageVisible = true;
 
-    let resolvePromise: undefined | (() => void);
+    let resolvePromise: (() => void) | undefined;
 
     vscode.window.setStatusBarMessage(
         '$(sync~spin) Running commands...',
@@ -72,6 +74,10 @@ const showStatusBarMessage = () => {
 };
 
 const onDidChangeConfiguration = () => {
+    config = vscode.workspace.getConfiguration('run-it');
+    commands = config.get<RunItConfig[]>('commands') ?? [];
+    globalDebug = config.get<boolean>('globalDebug') ?? false;
+
     if (globalDebug) {
         runItOutput.appendLine(`Number of attached watchers: ${watchers.length.toString()}`);
         runItOutput.appendLine(`Number of commands waiting to run: ${commandsWaitingToRun.size.toString()}`);
@@ -90,7 +96,7 @@ const onDidChangeConfiguration = () => {
         runItOutput.appendLine(`Loaded commands: ${JSON.stringify(commands)}`);
     }
 
-    for (const { delay, files, debug = false, commands: commandsList } of commands) {
+    for (const { commands: commandsList, debug = false, delay, files } of commands) {
         const executor = () => {
             for (const individualCommand of commandsList) {
                 const command = commandsWaitingToRun.get(individualCommand);
