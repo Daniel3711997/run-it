@@ -64,7 +64,7 @@
     "errorLens.messageMaxChars": 150,
     "errorLens.gutterIconsEnabled": true,
     "errorLens.statusBarIconsEnabled": false,
-    "errorLens.fontFamily": "JetBrains Mono",
+    // "errorLens.fontFamily": "JetBrains Mono",
     "errorLens.statusBarIconsPriority": 90000,
     "errorLens.messageBackgroundMode": "message",
     "errorLens.statusBarMessagePriority": -100000,

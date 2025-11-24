@@ -336,6 +336,11 @@ export default defineConfig([
             'unicorn/prefer-classlist-toggle': 'off',
             'unicorn/require-module-attributes': 'off',
 
+            // v62.0.0
+            'unicorn/no-immediate-mutation': 'error',
+            'unicorn/prefer-response-static-json': 'error',
+            'unicorn/no-useless-collection-argument': 'error',
+
             'no-shadow': 'off',
             '@typescript-eslint/no-shadow': 'error',
 
