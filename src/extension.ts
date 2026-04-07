@@ -67,7 +67,7 @@ const showStatusBarMessage = () => {
                 resolve();
                 isStatusBarMessageVisible = false;
             };
-        }),
+        })
     );
 
     return resolvePromise;
@@ -112,7 +112,7 @@ const onDidChangeConfiguration = () => {
 
                 if (debug || globalDebug) {
                     runItOutput.appendLine(
-                        `Setting command: ${individualCommand} with delay: ${(delay ?? defaultDelay).toString()}`,
+                        `Setting command: ${individualCommand} with delay: ${(delay ?? defaultDelay).toString()}`
                     );
                 }
 
@@ -165,6 +165,6 @@ export function activate(context: vscode.ExtensionContext) {
             if (event.affectsConfiguration('run-it')) {
                 onDidChangeConfiguration();
             }
-        }),
+        })
     );
 }

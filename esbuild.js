@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-
-const esbuild = require('esbuild');
+const esbuild = require('esbuild'); // eslint-disable-line @typescript-eslint/no-require-imports
 
 const watch = process.argv.includes('--watch');
 const production = process.argv.includes('--production');
@@ -17,7 +15,7 @@ const esbuildProblemMatcherPlugin = {
         });
 
         build.onEnd(result => {
-            result.errors.forEach(({ text, location }) => {
+            result.errors.forEach(({ location, text }) => {
                 console.error(`✘ [ERROR] ${text}`);
                 console.error(`    ${location.file}:${location.line}:${location.column}:`);
             });
@@ -29,16 +27,16 @@ const esbuildProblemMatcherPlugin = {
 async function main() {
     const ctx = await esbuild.context({
         bundle: true,
+        entryPoints: ['src/extension.ts'],
+        external: ['vscode'],
         format: 'cjs',
-        platform: 'node',
         logLevel: 'silent',
         minify: production,
-        external: ['vscode'],
-        sourcesContent: false,
-        sourcemap: !production,
         outfile: 'dist/extension.js',
-        entryPoints: ['src/extension.ts'],
+        platform: 'node',
         plugins: [esbuildProblemMatcherPlugin],
+        sourcemap: !production,
+        sourcesContent: false,
     });
 
     if (watch) {

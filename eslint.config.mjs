@@ -41,7 +41,17 @@ const defaultSortOptions = {
 };
 
 export default defineConfig([
-    globalIgnores(['.vscode', 'CHANGELOG.md', 'package.json', 'package-lock.json']),
+    globalIgnores([
+        'out/**',
+        'build/**',
+        '.github/**',
+        'node_modules/**',
+
+        '.vscode',
+        'CHANGELOG.md',
+        'package.json',
+        'package-lock.json',
+    ]),
     {
         files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
         languageOptions: {
@@ -58,6 +68,7 @@ export default defineConfig([
             },
         },
         linterOptions: {
+            reportUnusedInlineConfigs: 'error',
             reportUnusedDisableDirectives: 'error',
         },
     },
@@ -97,7 +108,13 @@ export default defineConfig([
             curly: ['error', 'multi-line'], // Disabled by the Prettier config
             'default-case-last': 'error',
             'dot-notation': 'error',
-            eqeqeq: 'error',
+            eqeqeq: [
+                'error',
+                'always',
+                {
+                    null: 'ignore',
+                },
+            ],
             'new-cap': [
                 'error',
                 {
@@ -341,6 +358,15 @@ export default defineConfig([
             'unicorn/prefer-response-static-json': 'error',
             'unicorn/no-useless-collection-argument': 'error',
 
+            // 63.0.0
+            'unicorn/isolated-functions': 'off',
+
+            // 64.0.0
+            'unicorn/consistent-template-literal-escape': 'error',
+            'unicorn/no-useless-iterator-to-array': 'error',
+            'unicorn/prefer-simple-condition-first': 'error',
+            'unicorn/switch-case-break-position': 'error',
+
             'no-shadow': 'off',
             '@typescript-eslint/no-shadow': 'error',
 
@@ -361,22 +387,31 @@ export default defineConfig([
 
             yoda: [
                 'error',
-                'always',
+                'never',
                 {
-                    onlyEquality: true,
+                    exceptRange: false,
+                    onlyEquality: false,
                 },
             ],
 
+            'no-unused-vars': 'off',
             '@typescript-eslint/no-unused-vars': [
                 'error',
                 {
-                    args: 'all',
-                    caughtErrors: 'all',
-                    argsIgnorePattern: '^_',
+                    vars: 'all',
                     varsIgnorePattern: '^_',
-                    ignoreRestSiblings: true,
+
+                    args: 'all',
+                    argsIgnorePattern: '^_',
+
+                    caughtErrors: 'all',
                     caughtErrorsIgnorePattern: '^_',
+
+                    ignoreRestSiblings: false,
+                    ignoreUsingDeclarations: false,
+                    reportUsedIgnorePattern: false,
                     destructuredArrayIgnorePattern: '^_',
+                    ignoreClassWithStaticInitBlock: false,
                 },
             ],
 
@@ -406,6 +441,14 @@ export default defineConfig([
             // 'perfectionist/sort-array-includes': ['error', defaultSortOptions],
 
             /**
+             * @see https://perfectionist.dev/rules/sort-export-attributes
+             */
+            'perfectionist/sort-export-attributes': ['error', defaultSortOptions],
+            /**
+             * @see https://perfectionist.dev/rules/sort-import-attributes
+             */
+            'perfectionist/sort-import-attributes': ['error', defaultSortOptions],
+            /**
              * @see https://perfectionist.dev/rules/sort-enums
              */
             'perfectionist/sort-enums': ['error', defaultSortOptions],
@@ -415,9 +458,15 @@ export default defineConfig([
             'perfectionist/sort-objects': [
                 'error',
                 {
+                    type: 'natural',
+                    useConfigurationIf: {
+                        allNamesMatchPattern: '^\\d+$',
+                    },
+                },
+                {
                     type: 'unsorted',
                     useConfigurationIf: {
-                        callingFunctionNamePattern: '^infiniteQueryOptions$',
+                        callingFunctionNamePattern: '^noFunction$',
                     },
                 },
                 defaultSortOptions,
@@ -584,7 +633,18 @@ export default defineConfig([
                 'error',
                 {
                     ...defaultSortOptions,
-                    groups: ['type-export', 'export', 'unknown'],
+                    groups: [
+                        'value-wildcard-export',
+                        'value-named-export',
+                        'value-export',
+
+                        'type-wildcard-export',
+                        'type-named-export',
+                        'type-export',
+
+                        'export',
+                        'unknown',
+                    ],
                 },
             ],
         },
@@ -625,13 +685,14 @@ export default defineConfig([
                     selector: "VariableDeclaration[kind='var'][declare!=true]",
                 },
             ],
-            '@typescript-eslint/no-non-null-assertion': 'off',
+            // '@typescript-eslint/prefer-optional-chain': 'error',
             // '@typescript-eslint/prefer-nullish-coalescing': [
             //     'error',
             //     {
             //         ignorePrimitives: true,
             //     },
             // ],
+            '@typescript-eslint/no-non-null-assertion': 'off',
             '@typescript-eslint/prefer-optional-chain': 'off',
             '@typescript-eslint/prefer-nullish-coalescing': 'off', // Not compatible with the React compiler
             '@typescript-eslint/strict-boolean-expressions': 'off',

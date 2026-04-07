@@ -2,20 +2,45 @@
     "compilerOptions": {
         "strict": true,
         "rootDir": "src",
-        "lib": ["es2022"],
+        "lib": ["ES2022"],
         "sourceMap": true,
-        "module": "node16",
-        "target": "es2022",
+        "module": "Node16",
+        "target": "ES2022",
 
         "paths": {
             "@/*": ["./src/*"]
         },
+        "types": ["node", "vscode", "mocha"],
 
+        "noEmit": false,
+        "allowJs": true,
+        "checkJs": false,
+        "incremental": false,
         "skipLibCheck": true,
+        "isolatedModules": false,
+        "resolveJsonModule": true,
+        "moduleResolution": "Node16",
+
+        "esModuleInterop": true,
+        "libReplacement": false,
+        "noUncheckedSideEffectImports": true,
+        "allowSyntheticDefaultImports": true,
+
         "noUnusedLocals": false,
         "noImplicitReturns": false,
+        "noImplicitOverride": true,
         "noUnusedParameters": false,
+        "verbatimModuleSyntax": false,
+        "useDefineForClassFields": true,
+
+        "strictNullChecks": true,
         "noUncheckedIndexedAccess": true,
-        "noFallthroughCasesInSwitch": true
-    }
+        "noFallthroughCasesInSwitch": true,
+        "exactOptionalPropertyTypes": false,
+        "forceConsistentCasingInFileNames": true,
+        "noPropertyAccessFromIndexSignature": false
+    },
+
+    "exclude": ["node_modules"],
+    "include": ["**/*.ts", "**/*.mts"]
 }

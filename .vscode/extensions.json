@@ -4,11 +4,9 @@
         "esbenp.prettier-vscode",
         "dbaeumer.vscode-eslint",
         "yoavbls.pretty-ts-errors",
-        "shardulm94.trailing-spaces",
         "ms-vscode.extension-test-runner",
         "christian-kohler.path-intellisense",
         "connor4312.esbuild-problem-matchers",
-        "meganrogge.template-string-converter",
         "streetsidesoftware.code-spell-checker"
     ]
 }

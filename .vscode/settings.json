@@ -8,7 +8,7 @@
         "out": true,
         "dist": true
     },
-    "typescript.tsc.autoDetect": "off",
+    "js/ts.tsc.autoDetect": "off",
 
     // Path Intellisense
     "path-intellisense.mappings": {
@@ -20,6 +20,9 @@
     "cSpell.files": ["**/.*.json", "**/*.{js,jsx,ts,tsx,json,css,scss}"],
 
     // General
+    "workbench.view.showQuietly": {
+        "workbench.panel.output": true
+    },
     "editor.formatOnSave": true,
     "editor.wordWrap": "bounded",
     "editor.wordWrapColumn": 120,
@@ -28,21 +31,17 @@
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "always"
     },
-    "javascript.suggest.paths": false,
-    "typescript.suggest.paths": false,
-    "javascript.validate.enable": true,
-    "typescript.validate.enable": true,
+    "js/ts.suggest.paths": false,
+    "js/ts.validate.enabled": true,
     "files.trimTrailingWhitespace": true,
     "editor.occurrencesHighlight": "off",
-    "typescript.enablePromptUseWorkspaceTsdk": true,
-    "typescript.tsdk": "node_modules/typescript/lib",
+    "js/ts.tsdk.promptToUseWorkspaceVersion": true,
+    "js/ts.tsdk.path": "node_modules/typescript/lib",
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "javascript.preferences.importModuleSpecifierEnding": "auto",
-    "javascript.preferences.importModuleSpecifier": "non-relative",
-    "typescript.preferences.importModuleSpecifierEnding": "auto",
-    "typescript.preferences.importModuleSpecifier": "non-relative",
+    "js/ts.preferences.importModuleSpecifierEnding": "auto",
+    "js/ts.preferences.importModuleSpecifier": "non-relative",
     "terminal.integrated.env.osx": {
-        "PATH": "${env:PATH}:${workspaceFolder}/node_modules/.bin"
+        // "PATH": "${env:PATH}:${workspaceFolder}/node_modules/.bin"
     },
 
     // Trailing Spaces

@@ -2,6 +2,15 @@
     "version": "0.2",
     "language": "en-US",
     "useGitignore": true,
+    "dictionaries": ["Application Dictionary"],
+    "import": ["@cspell/cspell-bundled-dicts"],
+    "dictionaryDefinitions": [
+        {
+            "addWords": true,
+            "name": "Application Dictionary",
+            "path": "./.cSpell/application-dictionary.txt"
+        }
+    ],
     "words": [],
     "ignorePaths": [".vscode"]
 }

@@ -2,7 +2,13 @@ import config from './eslint.config.mjs';
 
 const rules = ['!/*', 'perfectionist/*'];
 
-// https://github.com/microsoft/vscode-eslint/blob/001edda5bd168a9c6a79cba767111ba21eadd052/server/src/eslint.ts#L536
+/**
+ * https://github.com/microsoft/vscode-eslint/blob/001edda5bd168a9c6a79cba767111ba21eadd052/server/src/eslint.ts#L536
+ *
+ * @param {string} ruleId Rule Id
+ * @param {string[]} matchers Matchers
+ * @returns {boolean} Whether the rule should be turned off.
+ */
 function isOff(ruleId, matchers) {
     for (const matcher of matchers) {
         if (matcher.startsWith('!') && new RegExp(`^${matcher.slice(1).replace(/\*/g, '.*')}$`, 'g').test(ruleId)) {
@@ -11,6 +17,7 @@ function isOff(ruleId, matchers) {
             return false;
         }
     }
+
     return true;
 }
 
@@ -18,7 +25,7 @@ export default config.map(item => {
     if (item.linterOptions) {
         item.linterOptions = {
             ...item.linterOptions,
-            reportUnusedDisableDirectives: false,
+            reportUnusedDisableDirectives: 'off',
         };
     }
 
