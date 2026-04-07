@@ -1,6 +1,6 @@
 # Run It
 
-Runs VSCode commands on file changes
+Runs VSCode commands on file changes.
 
 ```JSON
 "run-it.globalDebug": false,
