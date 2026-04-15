@@ -214,7 +214,6 @@ export default defineConfig([
             perfectionist,
         },
         settings: {
-            linkComponents: ['Link'],
             'import/resolver': {
                 typescript: {
                     alwaysTryTypes: true,
@@ -414,6 +413,11 @@ export default defineConfig([
                     ignoreClassWithStaticInitBlock: false,
                 },
             ],
+
+            /**
+             * @see https://perfectionist.dev/rules/sort-arrays
+             */
+            // 'perfectionist/sort-arrays': ['error', defaultSortOptions],
 
             /**
              * @see https://perfectionist.dev/rules/sort-maps
