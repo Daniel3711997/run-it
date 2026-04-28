@@ -25,7 +25,7 @@ const watchers: ReturnType<typeof vscode.workspace.createFileSystemWatcher>[] = 
 
 const disposeAllWatchers = () => {
     if (globalDebug) {
-        runItOutput.appendLine(`Disposing ${watchers.length.toString()} attached watchers`);
+        runItOutput.appendLine(`Disposing ${watchers.length.toString()} attached watchers.`);
     }
 
     while (watchers.length) {
@@ -41,12 +41,12 @@ export function deactivate() {
     disposeAllWatchers();
 
     commandsWaitingToRun.forEach(({ timer }, individualCommand: string) => {
-        runItOutput.appendLine(`Clearing command: ${individualCommand}`);
+        runItOutput.appendLine(`Clearing command: ${individualCommand}.`);
         clearTimeout(timer);
     });
 
     if (globalDebug) {
-        runItOutput.appendLine(`Deleting ${commandsWaitingToRun.size.toString()} commands`);
+        runItOutput.appendLine(`Deleting ${commandsWaitingToRun.size.toString()} commands.`);
     }
     commandsWaitingToRun.clear();
 }
@@ -61,7 +61,7 @@ const showStatusBarMessage = () => {
     let resolvePromise: (() => void) | undefined;
 
     vscode.window.setStatusBarMessage(
-        '$(sync~spin) Running commands...',
+        '$(sync~spin) Running commands....',
         new Promise<void>(resolve => {
             resolvePromise = () => {
                 resolve();
@@ -79,21 +79,21 @@ const onDidChangeConfiguration = () => {
     globalDebug = config.get<boolean>('globalDebug') ?? false;
 
     if (globalDebug) {
-        runItOutput.appendLine(`Number of attached watchers: ${watchers.length.toString()}`);
-        runItOutput.appendLine(`Number of commands waiting to run: ${commandsWaitingToRun.size.toString()}`);
+        runItOutput.appendLine(`Number of attached watchers: ${watchers.length.toString()}.`);
+        runItOutput.appendLine(`Number of commands waiting to run: ${commandsWaitingToRun.size.toString()}.`);
 
         // prettier-ignore
         runItOutput.appendLine(
             `Commands waiting to run: ${JSON.stringify(
                 Array.from(commandsWaitingToRun.keys()),
-            )}`,
+            )}.`,
         );
     }
 
     disposeAllWatchers();
 
     if (globalDebug) {
-        runItOutput.appendLine(`Loaded commands: ${JSON.stringify(commands)}`);
+        runItOutput.appendLine(`Loaded commands: ${JSON.stringify(commands)}.`);
     }
 
     for (const { commands: commandsList, debug = false, delay, files } of commands) {
@@ -103,7 +103,7 @@ const onDidChangeConfiguration = () => {
 
                 if (command) {
                     if (debug || globalDebug) {
-                        runItOutput.appendLine(`Clearing command: ${individualCommand}`);
+                        runItOutput.appendLine(`Clearing command: ${individualCommand}.`);
                     }
 
                     clearTimeout(command.timer);
@@ -112,7 +112,7 @@ const onDidChangeConfiguration = () => {
 
                 if (debug || globalDebug) {
                     runItOutput.appendLine(
-                        `Setting command: ${individualCommand} with delay: ${(delay ?? defaultDelay).toString()}`
+                        `Setting command: ${individualCommand} with delay: ${(delay ?? defaultDelay).toString()}.`
                     );
                 }
 
@@ -121,13 +121,13 @@ const onDidChangeConfiguration = () => {
                         const resolvePromise = showStatusBarMessage();
 
                         if (debug || globalDebug) {
-                            runItOutput.appendLine(`Running command: ${individualCommand}`);
+                            runItOutput.appendLine(`Running command: ${individualCommand}.`);
                         }
 
                         vscode.commands.executeCommand(individualCommand);
 
                         if (debug || globalDebug) {
-                            runItOutput.appendLine(`Deleting command: ${individualCommand}`);
+                            runItOutput.appendLine(`Deleting command: ${individualCommand}.`);
                         }
 
                         commandsWaitingToRun.delete(individualCommand);
@@ -144,7 +144,7 @@ const onDidChangeConfiguration = () => {
 
         for (const filePattern of files) {
             if (globalDebug) {
-                runItOutput.appendLine(`Creating watcher for: ${filePattern}`);
+                runItOutput.appendLine(`Creating watcher for: ${filePattern}.`);
             }
 
             const watcher = vscode.workspace.createFileSystemWatcher(filePattern, false, false, true);
