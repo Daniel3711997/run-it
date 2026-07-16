@@ -100,7 +100,7 @@
             "eslint --no-error-on-unmatched-pattern --cache --cache-strategy content --cache-location .unpack/ESLintCacheFile"
         ],
         "**/*.{js,ts,json}": [
-            "prettier --write --cache --cache-strategy content --cache-location .unpack/PrettierCacheFile",
+            "prettier --no-error-on-unmatched-pattern --write --cache --cache-strategy content --cache-location .unpack/PrettierCacheFile",
             "cspell --dot --no-progress --no-must-find-files --cache --cache-strategy content --cache-location .unpack/CSpellCacheFile"
         ]
     },
