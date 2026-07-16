@@ -1,5 +1,8 @@
 /* eslint-disable perfectionist/sort-objects, unicorn/prefer-import-meta-properties */
 
+// import { FlatCompat } from '@eslint/eslintrc';
+// import css from '@eslint/css'; <- Disabled for now, StyleLint is used instead for the CSS/SCSS files.
+
 /**
  * The official ESLint configuration for Go To Next Level
  *
@@ -26,10 +29,12 @@ import globals from 'globals';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import { configs as TSESLintConfigs, parser as TSESLintParser } from 'typescript-eslint';
 
-// import css from '@eslint/css'; <- Disabled for now, StyleLint is used instead for the CSS/SCSS files.
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// const compat = new FlatCompat({
+//     baseDirectory: __dirname,
+// });
 
 const defaultSortOptions = {
     type: 'alphabetical',
@@ -47,7 +52,7 @@ export default defineConfig([
         '.github/**',
         'node_modules/**',
 
-        '.vscode',
+        '.vscode/**',
         'CHANGELOG.md',
         'package.json',
         'package-lock.json',
@@ -105,7 +110,7 @@ export default defineConfig([
             'no-var': 'warn',
             'object-shorthand': 'error',
             'accessor-pairs': 'error',
-            curly: ['error', 'multi-line'], // Disabled by the Prettier config
+            curly: ['error', 'multi-line'], // Disabled by the Prettier config.
             'default-case-last': 'error',
             'dot-notation': 'error',
             eqeqeq: [
@@ -202,10 +207,6 @@ export default defineConfig([
             'promise/param-names': 'error',
         },
     },
-    // {
-    //     files: ['**/*.spec.{js,jsx,ts,tsx}', '**/*.test.{js,jsx,ts,tsx}'],
-    //     extends: [jest.configs['flat/style'], jest.configs['flat/recommended']],
-    // },
     {
         files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
         plugins: {
@@ -295,6 +296,7 @@ export default defineConfig([
                 },
             ],
 
+            // Initial
             'unicorn/prefer-prototype-methods': 'error',
             'unicorn/prefer-default-parameters': 'error',
             'unicorn/prefer-optional-catch-binding': 'error',
@@ -329,9 +331,9 @@ export default defineConfig([
             ],
 
             'unicorn/no-array-callback-reference': 'off', // ....
-            'unicorn/prefer-single-call': 'off', // As of v59.0.0
+            'unicorn/prefer-single-call': 'off', // As of v59.0.0 (Rename from unicorn/no-array-push-push!)
 
-            'unicorn/no-unnecessary-slice-end': 'error', // As of v59.0.0
+            'unicorn/no-unnecessary-slice-end': 'error', // As of v59.0.0 (Rename from unicorn/no-length-as-slice-end!)
             'unicorn/consistent-function-scoping': 'error',
             'unicorn/no-await-in-promise-methods': 'error',
             'unicorn/no-useless-fallback-in-spread': 'error',
@@ -365,6 +367,42 @@ export default defineConfig([
             'unicorn/no-useless-iterator-to-array': 'error',
             'unicorn/prefer-simple-condition-first': 'error',
             'unicorn/switch-case-break-position': 'error',
+
+            // 65.0.0
+            'unicorn/better-dom-traversing': 'off',
+            'unicorn/consistent-compound-words': 'off',
+            'unicorn/consistent-json-file-read': 'off',
+            'unicorn/no-array-fill-with-reference-type': 'off',
+            'unicorn/no-array-from-fill': 'off',
+            'unicorn/no-blob-to-file': 'off',
+            'unicorn/no-canvas-to-image': 'off',
+            'unicorn/no-confusing-array-splice': 'off',
+            'unicorn/no-duplicate-set-values': 'off',
+            'unicorn/no-exports-in-scripts': 'off',
+            'unicorn/no-incorrect-query-selector': 'off',
+            'unicorn/no-invalid-file-input-accept': 'off',
+            'unicorn/no-late-current-target-access': 'off',
+            'unicorn/no-manually-wrapped-comments': 'off',
+            'unicorn/no-this-outside-of-class': 'off',
+            'unicorn/no-unnecessary-nested-ternary': 'off',
+            'unicorn/no-unused-array-method-return': 'off',
+            'unicorn/prefer-array-last-methods  ': 'off',
+            'unicorn/prefer-get-or-insert-computed': 'off',
+            'unicorn/prefer-https': 'off',
+            'unicorn/prefer-includes-over-repeated-comparisons': 'off',
+            'unicorn/prefer-iterator-concat': 'off',
+            'unicorn/prefer-iterator-to-array-at-end': 'off',
+            'unicorn/prefer-math-abs': 'off',
+            'unicorn/prefer-queue-microtask': 'off',
+            'unicorn/prefer-split-limit': 'off',
+            'unicorn/prefer-string-match-all': 'off',
+            'unicorn/prefer-string-pad-start-end': 'off',
+            'unicorn/prefer-string-repeat': 'off',
+            'unicorn/require-css-escape': 'off',
+            'unicorn/require-passive-events': 'off',
+            'unicorn/try-complexity': 'off',
+
+            //
 
             'no-shadow': 'off',
             '@typescript-eslint/no-shadow': 'error',
@@ -590,36 +628,13 @@ export default defineConfig([
                 },
             ],
 
-            // 'import/order': [
+            // https://eslint.org/docs/latest/rules/no-param-reassign
+            // 'no-param-reassign': [
             //     'error',
             //     {
-            //         distinctGroup: true,
-            //         'newlines-between': 'always',
-            //         warnOnUnassignedImports: true,
-            //         pathGroupsExcludedImportTypes: ['type'],
-            //         pathGroups: [
-            //             { group: 'unknown', position: 'after', pattern: '@/**' },
-            //             { group: 'unknown', position: 'after', pattern: '@fonts/**' },
-            //             { group: 'unknown', position: 'after', pattern: '@images/**' },
-            //             { group: 'unknown', position: 'after', pattern: '@styles/**' },
-            //             { group: 'unknown', position: 'after', pattern: '@clients/**' },
-            //         ],
-            //         alphabetize: {
-            //             order: 'asc',
-            //             orderImportKind: 'asc',
-            //             caseInsensitive: true,
-            //         },
-            //         groups: [
-            //             'type',
-            //             'builtin',
-            //             'external',
-            //             'internal',
-            //             'unknown',
-            //             'parent',
-            //             'sibling',
-            //             'index',
-            //             'object',
-            //         ],
+            //         props: false,
+            //         ignorePropertyModificationsFor: [],
+            //         ignorePropertyModificationsForRegex: [],
             //     },
             // ],
         },
@@ -698,7 +713,7 @@ export default defineConfig([
             // ],
             '@typescript-eslint/no-non-null-assertion': 'off',
             '@typescript-eslint/prefer-optional-chain': 'off',
-            '@typescript-eslint/prefer-nullish-coalescing': 'off', // Not compatible with the React compiler
+            '@typescript-eslint/prefer-nullish-coalescing': 'off', // Not compatible with the React compiler.
             '@typescript-eslint/strict-boolean-expressions': 'off',
             '@typescript-eslint/no-unnecessary-type-parameters': 'off',
             '@typescript-eslint/non-nullable-type-assertion-style': 'off',

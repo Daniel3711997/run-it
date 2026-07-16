@@ -10,10 +10,14 @@ allowBuilds:
     unrs-resolver: false
 
 minimumReleaseAge: 10080 # In Minutes (7 Days)
+minimumReleaseAgeStrict: true
+minimumReleaseAgeIgnoreMissingTime: false
 minimumReleaseAgeExclude:
-    - placeholder
+    - placeholder1
+    - placeholder2
 
 trustPolicy: no-downgrade
 trustPolicyExclude:
-    - placeholder
+    - placeholder1
+    - placeholder2
 trustPolicyIgnoreAfter: 43200 # In Minutes (30 Days)

@@ -29,7 +29,9 @@
     "files.trimFinalNewlines": true,
     "files.insertFinalNewline": true,
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": "always"
+        "source.fixAll.eslint": "always",
+        "source.removeUnusedImports": "never",
+        "source.addMissingImports.ts": "never"
     },
     "js/ts.suggest.paths": false,
     "js/ts.validate.enabled": true,
